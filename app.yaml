@@ -1,0 +1,18 @@
+application: vvmanager
+version: alpha
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+  - url: /img
+    static_dir: img
+  - url: /bower_components
+    static_dir: bower_components
+  - url: /src
+    static_dir: src
+  - url: /_/
+    static_dir: stub-data
+  - url: /
+    static_files: index.html
+    upload: index.html

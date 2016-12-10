@@ -1,0 +1,21 @@
+<link rel='import' href='../../bower_components/polymer/polymer.html'>
+<link rel='import' href='../../bower_components/google-signin/google-signin.html'>
+<link rel='import' href='../../bower_components/iron-meta/iron-meta.html'>
+
+<dom-module id='vvm-login-page'>
+  <template>
+    Please log in with your Google account to continue.
+    <google-signin
+      client-id='227145164482-33q7uk4mkaqp2obi5ih1arf6f7r63nlt.apps.googleusercontent.com'
+      label-signin='Log in'
+      label-signout='Log out'
+      scopes='profile email'
+      on-google-signin-aware-success='_logInSucceeded'>
+    </google-signin>
+    <iron-meta key='/user/email' value='{{_userEmail}}'></iron-meta>
+    <iron-meta key='/user/id' value={{_userId}}'></iron-meta>
+    <iron-meta key='/user/full-name' value={{_userFullName}}'></iron-meta>
+    <iron-meta key='/user/photo-url' value={{_userPhotoUrl}}'></iron-meta>
+  </template>
+  <script src='vvm-login-page.js' type='text/javascript'></script>
+</dom-module>

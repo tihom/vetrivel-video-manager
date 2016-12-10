@@ -1,0 +1,7 @@
+{
+  "name": "blank-app",
+  "short_name": "blank-app",
+  "description": "blank",
+  "start_url": "/",
+  "display": "standalone"
+}

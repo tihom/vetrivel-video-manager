@@ -1,0 +1,31 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/google-signin/google-signin-aware.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../vvm-xhr/vvm-xhr.html">
+
+<dom-module id="vvm-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Welcome to Vetrivel Foundation</h2>
+
+    <iron-meta id='meta'></iron-meta>
+    <iron-pages selected='[[page]]' attr-for-selected='key'>
+      <vvm-login-page key='login' on-login-complete='_loginComplete'></vvm-login-page>
+      <vvm-edit-user-page key='edit-user'></vvm-edit-user-page>
+      <vvm-task-page key='task'></vvm-task-page>
+    </iron-pages>
+
+    <google-signin-aware
+        scopes='profile email' is-authorized-changed='_loginStateChanged'>
+    </google-signin-aware>
+
+    <vvm-xhr id='xhr'></vvm-xhr>
+  </template>
+
+  <script src='vvm-app.js' type='text/javascript'></script>
+</dom-module>
