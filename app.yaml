@@ -11,8 +11,8 @@ handlers:
     static_dir: bower_components
   - url: /src
     static_dir: src
-  - url: /_/
-    static_dir: stub-data
+  - url: /_/.*
+    script: stub_data.handler.stub_handler
   - url: /
     static_files: index.html
     upload: index.html
