@@ -5,14 +5,15 @@ Polymer({
   properties: {
     page: {
       type: String,
-      reflectToAttribute: true,
       observer: '_pageChanged',
-      value: 'login'
-    },
+      value: 'team'
+    }
   },
 
   _pageChanged: function(page) {
+    console.log(page);
     let eltName = `vvm-${page}-page`;
+    console.log(`Importing ../${eltName}/${eltName}.html`);
     this.importHref(this.resolveUrl(`../${eltName}/${eltName}.html`), null, null, true);
   },
 

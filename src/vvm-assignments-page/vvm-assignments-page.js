@@ -1,5 +1,5 @@
 Polymer({
-  is: 'vvm-edit-user-page',
+  'is': 'vvm-assignments-page',
   properties: {
   }
 });

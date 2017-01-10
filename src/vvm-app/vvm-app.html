@@ -2,27 +2,39 @@
 <link rel="import" href="../../bower_components/google-signin/google-signin-aware.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../vvm-xhr/vvm-xhr.html">
 
 <dom-module id="vvm-app">
   <template>
     <style>
       :host {
+        @apply(--paper-font-common-base);
         display: block;
       }
+      .heading {
+        @apply(--paper-font-title);
+      }
     </style>
-    <h2>Welcome to Vetrivel Foundation</h2>
+    <paper-header-panel>
+      <paper-toolbar class='medium-tall'>
+        <div class='heading'>Vetrivel Video Manager</div>
+        <paper-tabs selected='{{page}}' attr-for-selected='page' class='bottom'>
+          <paper-tab page='assignments'>Assignments</paper-tab>
+          <paper-tab page='team'>Team</paper-tab>
+        </paper-tabs>
+      </paper-toolbar>
+    </paper-header-panel>
 
     <iron-meta id='meta'></iron-meta>
-    <iron-pages selected='[[page]]' attr-for-selected='key'>
-      <vvm-login-page key='login' on-login-complete='_loginComplete'></vvm-login-page>
-      <vvm-edit-user-page key='edit-user'></vvm-edit-user-page>
-      <vvm-task-page key='task'></vvm-task-page>
+    <iron-pages selected='{{page}}' attr-for-selected='key'>
+      <vvm-assignments-page key='assignments'></vvm-assignments-page>
+      <vvm-team-page key='team'></vvm-team-page>
     </iron-pages>
-
-    <google-signin-aware
-        scopes='profile email' is-authorized-changed='_loginStateChanged'>
-    </google-signin-aware>
 
     <vvm-xhr id='xhr'></vvm-xhr>
   </template>
