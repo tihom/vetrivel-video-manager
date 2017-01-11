@@ -4,20 +4,87 @@ Polymer({
   'is': 'vvm-team-page',
   properties: {
     team: {
+      type: Object,
+      value: {
+        members: []
+      }
+    },
+    _memberEditorAction: {
+      type: String
+    },
+    _editedMember: {
       type: Object
     }
   },
   attached: function() {
-    let teamDao = new VVM.TeamDao();
-    teamDao.getTeam().then(
+    this._teamDao = new VVM.TeamDao();
+    this._teamDao.getTeam().then(
       (team) => {
         this.team = team;
       });
   },
+  _isAdding: function(action) {
+    return action === 'add';
+  },
   _newMemberButtonTapped: function() {
     console.log(arguments);
+    this._memberEditorAction = 'add';
+    this._editedMember = {};
+    this.$.editorDialog.open();
   },
-  _memberTapped: function() {
-    console.log(arguments);
+  _memberTapped: function(evt) {
+    this._memberEditorAction = 'edit';
+    this._editedMember = evt.model.member;
+
+    this._editedIndex = this.team.members.findIndex(
+        m => m.id === this._editedMember.id, this);
+    if (this._editedIndex === -1) {
+      throw new Error('Could not find index for edited member.');
+    }
+
+    this.$.editorDialog.open();
+  },
+  _editorDialogClosed: function(evt) {
+    if (!evt.detail.confirmed) {
+      return;
+    }
+
+    if (this._memberEditorAction === 'add') {
+      this._teamDao.addMember(this._editedMember).then(
+          member => {
+            this.push('team.members', member);
+            this.notifyPath('team.members');
+          },
+          error => {
+            console.log(error);
+            alert('Adding member failed.');
+          });
+    } else if (this._memberEditorAction === 'edit') {
+      // http://stackoverflow.com/a/32083884/13326
+      ['name', 'phone', 'email'].forEach(
+          field => {
+            this.notifyPath(['team.members', this._editedIndex, field]);
+          },
+          this);
+    } else {
+      throw new Error('Unknown action: ' + this._memberEditorAction);
+    }
+  },
+  _memberDeleteButtonTapped: function() {
+    let okToDelete = window.confirm(`This will delete ${this._editedMember.name}.`);
+    if (!okToDelete) {
+      return;
+    }
+
+    this._teamDao.deleteMember(this._editedMember).then(
+        () => {
+          this.splice('team.members', this._editedIndex, 1);
+          this.notifyPath('team.members');
+          this.$.editorDialog.close();
+        },
+        error => {
+          console.log(error);
+          alert('Deleting member failed.');
+        });
   }
 });
