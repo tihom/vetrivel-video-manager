@@ -3,14 +3,19 @@ Polymer({
   is: 'vvm-app',
 
   properties: {
-    page: {
-      type: String,
-      observer: '_pageChanged',
-      value: 'team'
-    }
+  },
+  observers: [
+    '_pageChanged(routeData.page)'
+  ],
+
+  attached: function() {
+    this.set('routeData.page', 'team');
   },
 
   _pageChanged: function(page) {
+    if (!page) {
+      return;
+    }
     let eltName = `vvm-${page}-page`;
     this.importHref(this.resolveUrl(`../${eltName}/${eltName}.html`), null, null, true);
   },

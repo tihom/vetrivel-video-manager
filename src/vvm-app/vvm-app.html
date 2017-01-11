@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/google-signin/google-signin-aware.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
@@ -23,10 +24,19 @@
         padding-top: 10px;
       }
     </style>
+
+    <app-location route='{{route}}'></app-location>
+    <app-route
+        route='{{route}}'
+        pattern='/:page'
+        data='{{routeData}}'
+        tail='{{routeTail}}'>
+    </app-route>
+
     <paper-header-panel>
       <paper-toolbar class='medium-tall'>
         <div class='heading'>Vetrivel Video Manager</div>
-        <paper-tabs selected='{{page}}' attr-for-selected='page' class='bottom'>
+        <paper-tabs selected='{{routeData.page}}' attr-for-selected='page' class='bottom'>
           <paper-tab page='assignments'>Assignments</paper-tab>
           <paper-tab page='team'>Team</paper-tab>
         </paper-tabs>
@@ -34,7 +44,7 @@
     </paper-header-panel>
 
     <iron-meta id='meta'></iron-meta>
-    <iron-pages selected='{{page}}' attr-for-selected='key'>
+    <iron-pages selected='{{routeData.page}}' attr-for-selected='key'>
       <vvm-assignments-page key='assignments'></vvm-assignments-page>
       <vvm-team-page key='team'></vvm-team-page>
     </iron-pages>

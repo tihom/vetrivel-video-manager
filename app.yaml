@@ -15,6 +15,6 @@ handlers:
     static_dir: js
   - url: /_/.*
     script: stub_data.handler.stub_handler
-  - url: /
+  - url: /.*
     static_files: index.html
     upload: index.html
