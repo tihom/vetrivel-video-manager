@@ -1,4 +1,4 @@
-application: vvmanager
+application: vv-manager
 version: alpha
 runtime: python27
 api_version: 1
@@ -7,14 +7,20 @@ threadsafe: true
 handlers:
   - url: /img
     static_dir: img
+    secure: always
   - url: /bower_components
     static_dir: bower_components
+    secure: always
   - url: /src
     static_dir: src
+    secure: always
   - url: /js
     static_dir: js
+    secure: always
   - url: /_/.*
     script: stub_data.handler.stub_handler
+    secure: always
   - url: /.*
     static_files: index.html
     upload: index.html
+    secure: always
