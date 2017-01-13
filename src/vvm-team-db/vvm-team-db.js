@@ -10,25 +10,7 @@ Polymer({
   },
 
   getTeam: function() {
-    return Promise.resolve({
-      name: 'Test Team',
-      members: [
-        {
-          id: ++this._nextId,
-          name: 'Suresh',
-          email: 'sureshbabu@gmail.com',
-          phone: '+91 96345 87822',
-          languages: ['English', 'Tamil']
-        },
-        {
-          id: ++this._nextId,
-          name: 'Janani',
-          email: 'jananikumar@gmail.com',
-          phone: '+91 98433 83153',
-          languages: ['English', 'Tamil', 'Hindi']
-        }
-      ]
-    });
+    return this.$.xhr.get('/_/team');
   },
 
   addMember: function(newMember) {
@@ -37,10 +19,14 @@ Polymer({
   },
 
   updateMember: function(member) {
-    return Promise.resolve({});
+    return this.$.xhr.put(this._memberUrl(member), member);
   },
 
   deleteMember: function(member) {
-    return Promise.resolve({});
+    return this.$.xhr.del(this._memberUrl(member));
+  },
+
+  _memberUrl: function(member) {
+    return '/_/team/members/' + member.id;
   }
 });
