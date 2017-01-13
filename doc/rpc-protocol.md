@@ -14,7 +14,11 @@ served a [403 response](https://httpstatuses.com/403). Any method that does not
 require the user to be signed in will be explicitly marked as such.
 
 ### XSRF prevention
-TODO: provide XSRF prevention information.
+We use the techniques recommended at [OWASP web
+site](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet).
+More specifically, we use the origin check (section 2.1) and custom HTTP header
+(section 2.2.4). This can be implemented in a Python decorator function to
+avoid code duplication.
 
 ### Team information APIs
 #### GET /_/team

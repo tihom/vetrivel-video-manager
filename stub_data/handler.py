@@ -2,8 +2,11 @@
 
 import json
 import logging
+import urlparse
 import uuid
 import webapp2
+
+from google.appengine.api.app_identity import app_identity
 
 
 def _WriteJson(response, data):
@@ -11,7 +14,52 @@ def _WriteJson(response, data):
   response.write(json.dumps(data))
 
 
+def _ExtractHostPort(url):
+  parsed_url = urlparse.urlparse(url)
+  result = ''
+  if parsed_url.hostname is not None:
+    result += parsed_url.hostname
+  if parsed_url.port is not None:
+    result += ':' + str(parsed_url.port)
+  return result
+
+
+def _SourceHostPort(request):
+  if 'Origin' in request.headers:
+    return _ExtractHostPort(request.headers['Origin'])
+  elif 'Referer' in request.headers:
+    return _ExtractHostPort(request.headers['Referer'])
+  else:
+    return '(unknown)'
+
+
+def XsrfValidated(fn):
+  # XSRF prevention done based on advice from
+  # https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet
+  # We apply all of section 2.1 (identifying source origin) and
+  # section 2.2.4 (use of custom request headers).
+  def wrapper(handler, *args, **kwargs):
+    source_host_port = _SourceHostPort(handler.request)
+    if source_host_port != app_identity.get_default_version_hostname():
+      handler.response.headers.add_header('Content-Type', 'text/plain')
+      handler.response.set_status(403)
+      handler.response.write(
+          'Declining request from origin %s.' % source_host_port)
+      return
+
+    app_name = handler.request.headers.get('X-App-Name')
+    if app_name != 'VVManager':
+      handler.response.headers.add_header('Content-Type', 'text/plain')
+      handler.response.set_status(403)
+      handler.response.write('Declining request without magic header.')
+      return
+
+    return fn(handler, *args, **kwargs)
+  return wrapper
+
+
 class _StubDataHandler(webapp2.RequestHandler):
+  @XsrfValidated
   def post(self):
     request = json.loads(self.request.body)
     data = self.GetResponse(request)
@@ -23,6 +71,7 @@ class _StubDataHandler(webapp2.RequestHandler):
       self.response.write(json.dumps(data))
 
 class GetTeamHandler(webapp2.RequestHandler):
+  @XsrfValidated
   def get(self):
     team = {
       'name': 'Test team',
@@ -45,16 +94,17 @@ class GetTeamHandler(webapp2.RequestHandler):
 
 
 class TeamMemberHandler(webapp2.RequestHandler):
+  @XsrfValidated
   def put(self, member_id):
-    logging.info('Storing member %s', member_id)
     _WriteJson(self.response, {})
 
+  @XsrfValidated
   def delete(self, member_id):
-    logging.info('Deleting member %s', member_id)
     _WriteJson(self.response, {})
 
 
 class AddTeamMemberHandler(webapp2.RequestHandler):
+  @XsrfValidated
   def post(self):
     member = json.loads(self.request.body)
     member['id'] = str(uuid.uuid1())

@@ -18,6 +18,7 @@ Polymer({
     this.$.ajax.method = method;
     this.$.ajax.url = url;
     this.$.ajax.body = body;
+    this.$.ajax.headers = {'X-App-Name': 'VVManager'};
     return this.$.ajax.generateRequest().completes.then(
         request => {
           // request is the iron-request.
