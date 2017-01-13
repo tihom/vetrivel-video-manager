@@ -9,6 +9,7 @@
 <link rel='import' href='../../bower_components/paper-input/paper-input.html'>
 <link rel='import' href='../../bower_components/paper-styles/color.html'>
 <link rel='import' href='../../bower_components/paper-styles/shadow.html'>
+<link rel='import' href='../vvm-team-db/vvm-team-db.html'>
 
 <dom-module id="vvm-team-page">
   <template>
@@ -87,8 +88,9 @@
         <paper-button dialog-confirm>Save</paper-button>
       </div>
     </paper-dialog>
+
+    <vvm-team-db id='teamDb'></vvm-team-db>
   </template>
 
-  <script src='/js/team-dao.js' type='text/javascript'></script>
   <script src='vvm-team-page.js' type='text/javascript'></script>
 </dom-module>

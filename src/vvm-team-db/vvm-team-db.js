@@ -1,10 +1,15 @@
-var VVM = VVM || {};
-VVM.TeamDao = VVM.TeamDao || class {
-  constructor() {
-    this._nextId = 0;
-  }
+'use strict';
 
-  getTeam() {
+Polymer({
+  is: 'vvm-team-db',
+  properties: {
+    _nextId: {
+      type: Number,
+      value: 0
+    }
+  },
+
+  getTeam: function() {
     return Promise.resolve({
       name: 'Test Team',
       members: [
@@ -24,14 +29,17 @@ VVM.TeamDao = VVM.TeamDao || class {
         }
       ]
     });
-  }
+  },
 
-  addMember(newMember) {
+  addMember: function(newMember) {
     newMember.id = ++this._nextId;
     return Promise.resolve(newMember);
-  }
+  },
 
-  deleteMember(member) {
+  updateMember: function(member) {
+  },
+
+  deleteMember: function(member) {
     return Promise.resolve({});
   }
-};
+});

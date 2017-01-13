@@ -17,8 +17,7 @@ Polymer({
     }
   },
   attached: function() {
-    this._teamDao = new VVM.TeamDao();
-    this._teamDao.getTeam().then(
+    this.$.teamDb.getTeam().then(
       (team) => {
         this.team = team;
       });
@@ -50,7 +49,7 @@ Polymer({
     }
 
     if (this._memberEditorAction === 'add') {
-      this._teamDao.addMember(this._editedMember).then(
+      this.$.teamDb.addMember(this._editedMember).then(
           member => {
             this.push('team.members', member);
             this.notifyPath('team.members');
@@ -76,7 +75,7 @@ Polymer({
       return;
     }
 
-    this._teamDao.deleteMember(this._editedMember).then(
+    this.$.teamDb.deleteMember(this._editedMember).then(
         () => {
           this.splice('team.members', this._editedIndex, 1);
           this.notifyPath('team.members');
