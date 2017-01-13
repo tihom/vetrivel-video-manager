@@ -3,10 +3,6 @@
 Polymer({
   is: 'vvm-team-db',
   properties: {
-    _nextId: {
-      type: Number,
-      value: 0
-    }
   },
 
   getTeam: function() {
@@ -14,8 +10,7 @@ Polymer({
   },
 
   addMember: function(newMember) {
-    newMember.id = ++this._nextId;
-    return Promise.resolve(newMember);
+    return this.$.xhr.post('/_/team/add-member', newMember);
   },
 
   updateMember: function(member) {

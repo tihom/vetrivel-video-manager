@@ -2,6 +2,7 @@
 
 import json
 import logging
+import uuid
 import webapp2
 
 
@@ -21,19 +22,19 @@ class _StubDataHandler(webapp2.RequestHandler):
       self.response.headers.add_header('Content-Type', 'application/json')
       self.response.write(json.dumps(data))
 
-class GetTeam(webapp2.RequestHandler):
+class GetTeamHandler(webapp2.RequestHandler):
   def get(self):
     team = {
       'name': 'Test team',
       'members': [
         {
-          'id': 1,
+          'id': str(uuid.uuid1()),
           'name': 'Suresh',
           'phone': '+91 96345 87822',
           'email': 'sureshbabu@gmail.com',
         },
         {
-          'id': 2,
+          'id': str(uuid.uuid1()),
           'name': 'Janani',
           'phone': '+91 98433 83153',
           'email': 'jananikumar@gmail.com',
@@ -52,6 +53,14 @@ class TeamMemberHandler(webapp2.RequestHandler):
     logging.info('Deleting member %s', member_id)
     _WriteJson(self.response, {})
 
+
+class AddTeamMemberHandler(webapp2.RequestHandler):
+  def post(self):
+    member = json.loads(self.request.body)
+    member['id'] = str(uuid.uuid1())
+    _WriteJson(self.response, member)
+
+
 class LookupCurrentUser(_StubDataHandler):
   _responses = {
       't.manki@gmail.com': {
@@ -66,7 +75,8 @@ class LookupCurrentUser(_StubDataHandler):
 
 
 stub_handler = webapp2.WSGIApplication([
-    ('/_/team', GetTeam),
+    (r'/_/team', GetTeamHandler),
+    (r'/_/team/add-member', AddTeamMemberHandler),
     (r'/_/team/members/(.+)', TeamMemberHandler),
-    ('/_/users/lookup', LookupCurrentUser),
+    (r'/_/users/lookup', LookupCurrentUser),
     ], debug=True)

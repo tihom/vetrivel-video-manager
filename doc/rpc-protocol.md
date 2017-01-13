@@ -21,7 +21,7 @@ TODO: provide XSRF prevention information.
 This method does not accept any input. It returns the currently logged-in
 user's team as a JSON object.
 
-#### POST /_/team/members/add
+#### POST /_/team/add-member
 This method accepts an incomplete member object (as a JSON object) as the POST
 body input and persists the new team member. Specifically, the input member
 must not have a member ID. Returns a JSON representation of the newly-added
