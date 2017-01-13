@@ -43,11 +43,7 @@ Polymer({
 
     this.$.editorDialog.open();
   },
-  _editorDialogClosed: function(evt) {
-    if (!evt.detail.confirmed) {
-      return;
-    }
-
+  _memberSaveButtonTapped: function(evt) {
     if (this._memberEditorAction === 'add') {
       this.$.teamDb.addMember(this._editedMember).then(
           member => {
@@ -56,15 +52,27 @@ Polymer({
           },
           error => {
             console.log(error);
+            evt.preventDefault();
             alert('Adding member failed.');
           });
     } else if (this._memberEditorAction === 'edit') {
-      // http://stackoverflow.com/a/32083884/13326
-      ['name', 'phone', 'email'].forEach(
-          field => {
-            this.notifyPath(['team.members', this._editedIndex, field]);
-          },
-          this);
+      this.$.teamDb.updateMember(this._editedMember)
+          .then(
+              member => {
+                // http://stackoverflow.com/a/32083884/13326
+                ['name', 'phone', 'email'].forEach(
+                    field => {
+                      this.notifyPath(
+                          ['team.members', this._editedIndex, field]);
+                    },
+                    this);
+              })
+          .catch(
+              error => {
+                console.log(error);
+                evt.preventDefault();
+                alert('Editing member failed.');
+              });
     } else {
       throw new Error('Unknown action: ' + this._memberEditorAction);
     }

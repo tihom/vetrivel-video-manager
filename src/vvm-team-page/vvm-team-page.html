@@ -63,8 +63,7 @@
       button below.
     </template>
 
-    <paper-dialog id='editorDialog' no-cancel-on-outside-click
-        on-iron-overlay-closed='_editorDialogClosed'>
+    <paper-dialog id='editorDialog' no-cancel-on-outside-click>
       <h2>
         <template is='dom-if' if='[[_isAdding(_memberEditorAction)]]'>
           Add a new member
@@ -85,7 +84,7 @@
         <template is='dom-if' if='[[!_isAdding(_memberEditorAction)]]'>
           <paper-button on-tap='_memberDeleteButtonTapped'>Delete</paper-button>
         </template>
-        <paper-button dialog-confirm>Save</paper-button>
+        <paper-button on-tap='_memberSaveButtonTapped'>Save</paper-button>
       </div>
     </paper-dialog>
 

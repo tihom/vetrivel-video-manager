@@ -37,6 +37,7 @@ Polymer({
   },
 
   updateMember: function(member) {
+    return Promise.resolve({});
   },
 
   deleteMember: function(member) {
