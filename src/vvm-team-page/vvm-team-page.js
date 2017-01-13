@@ -26,7 +26,6 @@ Polymer({
     return action === 'add';
   },
   _newMemberButtonTapped: function() {
-    console.log(arguments);
     this._memberEditorAction = 'add';
     this._editedMember = {};
     this.$.editorDialog.open();
@@ -49,30 +48,28 @@ Polymer({
           member => {
             this.push('team.members', member);
             this.notifyPath('team.members');
+            this.$.editorDialog.close();
           },
           error => {
             console.log(error);
-            evt.preventDefault();
             alert('Adding member failed.');
           });
     } else if (this._memberEditorAction === 'edit') {
-      this.$.teamDb.updateMember(this._editedMember)
-          .then(
-              member => {
-                // http://stackoverflow.com/a/32083884/13326
-                ['name', 'phone', 'email'].forEach(
-                    field => {
-                      this.notifyPath(
-                          ['team.members', this._editedIndex, field]);
-                    },
-                    this);
-              })
-          .catch(
-              error => {
-                console.log(error);
-                evt.preventDefault();
-                alert('Editing member failed.');
-              });
+      this.$.teamDb.updateMember(this._editedMember).then(
+          member => {
+            // http://stackoverflow.com/a/32083884/13326
+            ['name', 'phone', 'email'].forEach(
+                field => {
+                  this.notifyPath(
+                      ['team.members', this._editedIndex, field]);
+                },
+                this);
+            this.$.editorDialog.close();
+          },
+          error => {
+            console.log(error);
+            alert('Editing member failed.');
+          });
     } else {
       throw new Error('Unknown action: ' + this._memberEditorAction);
     }
