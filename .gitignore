@@ -1,3 +1,16 @@
+*.log
+.DS_Store
 *.pyc
+*.json
+db.sqlite3
+__pycache__
+
+rest/videomanager/settings/secrets/development.py
+rest/videomanager/settings/secrets/production.py
+rest/videomanager/settings/secrets/staging.py
+rest/videomanager/settings/secrets/testing.py
+
+rest/cloud_sql_proxy/*
+rest/todos.txt
 
 dev_appserver.datastore
