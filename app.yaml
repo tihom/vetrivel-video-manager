@@ -17,7 +17,36 @@ handlers:
   - url: /_/.*
     script: stub_data.handler.stub_handler
     secure: always
+# [REST URLS]
+  - url: /rest/static/
+    static_dir: rest/static/
+    secure: always
+  - url: /rest/.*
+    script: videomanager.wsgi.application
+    secure: always
+## [END REST URLS]
   - url: /.*
     static_files: index.html
     upload: index.html
     secure: always
+
+# Only pure Python libraries can be vendored
+# Python libraries that use C extensions can
+# only be included if they are part of the App Engine SDK 
+# Using Third Party Libraries: https://cloud.google.com/appengine/docs/python/tools/using-libraries-python-27
+libraries:
+  - name: MySQLdb
+    version: 1.2.5
+  - name: ssl
+    version: 2.7
+  - name: yaml
+    version: '3.10'
+  - name: lxml
+    version: 2.3
+  - name: setuptools
+    version: 0.6c11
+  - name: pycrypto
+    version: 2.3
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: 'videomanager.settings.production'
