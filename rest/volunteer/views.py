@@ -6,7 +6,8 @@ from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import serializers
-
+from rest_framework import status
+    
 from .models import Volunteer
 from .serializers import VolunteerSerializer, UserSerializer
 
@@ -32,17 +33,18 @@ class VolunteerViewSet(viewsets.ModelViewSet):
     def get_team(self, request):
         """Get the list of team member for currently logged in user"""
         serializer = VolunteerSerializer(request.user.team, many=True)
-        return Response(serializer.data)
+        team_data = {'name': 'My Team', 'members': serializer.data}
+        return Response(team_data)
 
     def add_team_member(self, request):
         """Post to add new team member"""
         leader = request.user
         # check if username is not taken already
-        new_username = request.data["username"]
+        new_username = request.data["name"]
         if User.objects.filter(username=new_username).exists():
             raise serializers.ValidationError('User already exists')
         # valdiate form data
-        volunteer_serializer = VolunteerSerializer(volunteer, data=request.data, partial=True)
+        volunteer_serializer = VolunteerSerializer(data=request.data, partial=True)
         volunteer_serializer.is_valid(raise_exception=True)
         validated_data = volunteer_serializer.validated_data
         # create user

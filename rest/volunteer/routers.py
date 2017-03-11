@@ -15,7 +15,7 @@ class VolunteerRouter(SimpleRouter):
             initkwargs={'suffix': 'Detail'}
         ),
         Route(
-            url=r'^team/$',
+            url=r'^team/?$',
             mapping={'get': 'get_team'},
             name='team-list',
             initkwargs={'suffix': 'List'}
@@ -28,14 +28,9 @@ class VolunteerRouter(SimpleRouter):
         ),
         Route(
             url=r'^team/members/(?P<user_id>\d+)$',
-            mapping={'put': 'update_team_member'},
+            mapping={'put': 'update_team_member',
+                    'delete': 'delete_team_member'},
             name='team-update',
-            initkwargs={'suffix': 'Detail'}
-        ),
-        Route(
-            url=r'^team/members/(?P<user_id>\d+)$',
-            mapping={'delete': 'delete_team_member'},
-            name='team-delete',
             initkwargs={'suffix': 'Detail'}
         ),
     ]
