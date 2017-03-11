@@ -26,7 +26,7 @@ Polymer({
       throw new Error('User has not logged in.');
     }
 
-    this.$.xhr.post('/_/users/lookup', {
+    this.$.xhr.post('/rest/_/users/lookup', {
       'email': this.$.meta.byKey('/user/email')
     }).then((response) => {
       console.log(response);

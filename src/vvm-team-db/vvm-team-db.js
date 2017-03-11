@@ -6,11 +6,11 @@ Polymer({
   },
 
   getTeam: function() {
-    return this.$.xhr.get('/_/team');
+    return this.$.xhr.get('/rest/_/team');
   },
 
   addMember: function(newMember) {
-    return this.$.xhr.post('/_/team/add-member', newMember);
+    return this.$.xhr.post('/rest/_/team/add-member', newMember);
   },
 
   updateMember: function(member) {
@@ -22,6 +22,6 @@ Polymer({
   },
 
   _memberUrl: function(member) {
-    return '/_/team/members/' + member.id;
+    return '/rest/_/team/members/' + member.id;
   }
 });
