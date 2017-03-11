@@ -1,5 +1,5 @@
 application: vv-manager
-version: alpha
+version: 20170311-1
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -29,6 +29,7 @@ handlers:
     static_files: index.html
     upload: index.html
     secure: always
+    login: required
 
 # Only pure Python libraries can be vendored
 # Python libraries that use C extensions can
