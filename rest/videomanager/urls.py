@@ -24,7 +24,7 @@ from volunteer.urls import urlpatterns as volunteer_urlpatterns
 from translations.urls import urlpatterns as translations_urlpatterns
 
 schema_view = get_schema_view(title="Video Manager API")
-api_urls = volunteer_urlpatterns #+ translations_urlpatterns
+api_urls = volunteer_urlpatterns + translations_urlpatterns
 
 root_path = r'^%s' % settings.SITE_ROOT_PATH
 urlpatterns = [

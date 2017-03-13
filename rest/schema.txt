@@ -1,0 +1,58 @@
+# Khan Academy Topic
+Domain	
+Subject	
+Topic	
+Tutorial	
+Title	
+Priority	
+YouTube Link	
+YouTube Title	
+Duration	
+has_many: subtiltes
+has_many: translations
+
+# subtitle_task
+belongs_to: video
+title:
+language: (Tamil/Hindi)
+uploaded_to_youtube: (Y/N)	
+status: (?)
+
+assigned_to: user
+created_at: 
+updated_at:
+status: (assigned/submitted/revoked/reassigned/approved)
+reviewer:
+review_comment:	
+
+
+
+# Translation
+belongs_to: video
+title:
+language: (Tamil/Hindi)
+uploaded_to_google_drive: (Y/N)
+link_to_google_drive: (url)
+uploaded_to_ka: (Y/n)
+youtube_link: 
+org ?
+TVA Team Notified or Not(Y/N)	?
+Audio: ?	
+
+assigned_to: user
+created_at: 
+updated_at:
+status: (assigned/submitted/revoked/reassigned/approved)
+reviewer:
+review_comment:	
+
+
+Video Needs to be Redo or not(Y/N)	
+Modification if Needed complete or not(Y/N)	
+Link to Modified Video GDrive	
+
+
+Samacheer Kalvi ; Standard: ?
+
+
+AH 01	Arts and humanities	Art history basics		First things first	Why look at art?	http://www.youtube.com/watch?v=0OloYD_kSbU	Why look at art?	01:55								1	TVA	DONE	DONE	Edited	yes	https://drive.google.com/open?id=0B7MhG-FYbIOsNG8ydHk3Umlzelk	Yes									

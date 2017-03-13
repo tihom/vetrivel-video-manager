@@ -1,25 +1,30 @@
 from django.db import models
 
 
-class VideoMeta(models.Model):
-    youtube_url = models.CharField(unique=True, max_length=255)
+class YoutubeVideo(models.Model):
+    url = models.CharField(db_index=True, 
+        unique=True, max_length=255)
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True)
+    duration = models.CharField(max_length=20,
+        blank=True)
+    language = models.CharField(max_length=20)
 
     def __str__(self):
-        return self.youtube_url
+        return self.url
 
 
-class OriginalVideo(models.Model):
+class KhanAcademyVideo(models.Model):
     sno = models.CharField(max_length=255)
-    url = models.CharField(max_length=255)
+    title = models.CharField(db_index=True, max_length=255)
     domain = models.CharField(max_length=255)
     subject = models.CharField(max_length=255)
     topic = models.CharField(max_length=255)
     tutorial = models.CharField(max_length=255)
-    priority = models.IntegerField(blank=True)
-    # has one video meta object
-    video_meta = models.ForeignKey(VideoMeta, on_delete=models.CASCADE, blank=True, null=True)
+    priority = models.IntegerField(blank=True, null=True)
+    # has one youtube video doc
+    youtube_video = models.ForeignKey(YoutubeVideo,
+        on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return self.url
+        return self.title
