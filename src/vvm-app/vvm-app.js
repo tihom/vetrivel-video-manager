@@ -9,7 +9,8 @@ Polymer({
   ],
 
   attached: function() {
-    this.set('routeData.page', 'team');
+    // TODO: Choose the default page smartly.
+    this.set('routeData.page', 'assignments');
   },
 
   _pageChanged: function(page) {

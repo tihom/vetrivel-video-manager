@@ -60,10 +60,8 @@ Polymer({
             // http://stackoverflow.com/a/32083884/13326
             ['name', 'phone', 'email'].forEach(
                 field => {
-                  this.notifyPath(
-                      ['team.members', this._editedIndex, field]);
-                },
-                this);
+                  this.notifyPath(['team.members', this._editedIndex, field]);
+                });
             this.$.editorDialog.close();
           },
           error => {
