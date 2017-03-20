@@ -11,3 +11,9 @@ class Volunteer(models.Model):
 
 	def __str__(self):
 		return self.user.username
+
+	def name(self):
+		self.user.name
+
+	def email(self):
+		self.user.email

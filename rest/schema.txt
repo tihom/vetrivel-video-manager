@@ -1,29 +1,31 @@
-# Khan Academy Topic
-Domain	
-Subject	
-Topic	
-Tutorial	
-Title	
-Priority	
-YouTube Link	
-YouTube Title	
-Duration	
-has_many: subtiltes
-has_many: translations
+# Khan Academy Video
+sno
+title
+domain
+subject
+topic
+tutorial
+priority
+has_one: youtube_video	
+has_many: tasks
 
-# subtitle_task
-belongs_to: video
-title:
-language: (Tamil/Hindi)
-uploaded_to_youtube: (Y/N)	
-status: (?)
 
-assigned_to: user
+# YoutubeVideo
+url
+title
+description
+duration
+language
+
+# Task table
+belongs_to: khan_academy_video
+belongs_to: volunteer
+task_type: (subtitle/subtitle_review/voiceover/voiceover_review)
+language: (language code like ta for Tamil)
 created_at: 
 updated_at:
-status: (assigned/submitted/revoked/reassigned/approved)
-reviewer:
-review_comment:	
+state: (assigned/abandoned/completed)
+comment:	
 
 
 
